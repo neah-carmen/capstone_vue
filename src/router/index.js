@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Index from "../views/Index.vue";
 import EdiblesIndex from "../views/edibles/Index.vue";
+import EdiblesShow from "../views/edibles/Show.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: "/edibles/",
     name: "edibles-index",
     component: EdiblesIndex
+  },
+  {
+    path: "/edibles/:id",
+    name: "edibles-show",
+    component: EdiblesShow
   }
 ];
 
