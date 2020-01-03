@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Index from "../views/Index.vue";
+import EdiblesIndex from "../views/edibles/Index.vue";
 import axios from "axios";
 
 axios.defaults.baseURL =
@@ -11,8 +12,13 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Home
+    name: "index",
+    component: Index
+  },
+  {
+    path: "/edibles/",
+    name: "edibles-index",
+    component: EdiblesIndex
   }
 ];
 
