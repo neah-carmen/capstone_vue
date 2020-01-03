@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/edibles/">All Edibles</router-link>|
+      <router-link to="/edibles/">Home</router-link>|
       <router-link to="/users/">Signup</router-link>|
       <router-link to="/sessions/create">Login</router-link>|
       <router-link to="/sessions/destroy">Logout</router-link>

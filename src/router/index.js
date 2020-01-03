@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Index from "../views/Index.vue";
 import EdiblesIndex from "../views/edibles/Index.vue";
 import EdiblesShow from "../views/edibles/Show.vue";
 import UsersCreate from "../views/users/Show.vue";
@@ -10,11 +9,6 @@ import SessionsDestroy from "../views/sessions/Destroy.vue";
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/",
-    name: "index",
-    component: Index
-  },
   {
     path: "/edibles/",
     name: "edibles-index",
