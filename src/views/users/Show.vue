@@ -52,7 +52,7 @@ export default {
       axios
         .post("/api/users", params)
         .then(response => {
-          this.$router.push("/sessions");
+          this.$router.push("/sessions/create/");
         })
         .catch(error => {
           this.errors = error.response.data.errors;

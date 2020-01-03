@@ -4,7 +4,8 @@ import Index from "../views/Index.vue";
 import EdiblesIndex from "../views/edibles/Index.vue";
 import EdiblesShow from "../views/edibles/Show.vue";
 import UsersCreate from "../views/users/Show.vue";
-import SessionsCreate from "../views/sessions/Show.vue";
+import SessionsCreate from "../views/sessions/Create.vue";
+import SessionsDestroy from "../views/sessions/Destroy.vue";
 
 Vue.use(VueRouter);
 
@@ -30,9 +31,14 @@ const routes = [
     component: UsersCreate
   },
   {
-    path: "/sessions/",
+    path: "/sessions/create",
     name: "sessions-create",
     component: SessionsCreate
+  },
+  {
+    path: "/sessions/destroy",
+    name: "sessions-destroy",
+    component: SessionsDestroy
   }
 ];
 
