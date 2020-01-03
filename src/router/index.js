@@ -2,10 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Index from "../views/Index.vue";
 import EdiblesIndex from "../views/edibles/Index.vue";
-import axios from "axios";
-
-axios.defaults.baseURL =
-  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "/";
 
 Vue.use(VueRouter);
 
