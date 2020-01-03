@@ -4,6 +4,7 @@ import Index from "../views/Index.vue";
 import EdiblesIndex from "../views/edibles/Index.vue";
 import EdiblesShow from "../views/edibles/Show.vue";
 import UsersCreate from "../views/users/Show.vue";
+import SessionsCreate from "../views/sessions/Show.vue";
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: "/users/",
     name: "users-create",
     component: UsersCreate
+  },
+  {
+    path: "/sessions/",
+    name: "sessions-create",
+    component: SessionsCreate
   }
 ];
 
