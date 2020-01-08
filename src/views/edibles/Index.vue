@@ -1,12 +1,12 @@
 <template>
   <div class="edibles-index">
     <h1>{{ message }}</h1>
-    <div v-for="edible in edibles">
+    <div v-for="edible in edibles" v-bind:key="edible.id">
       <div>
         <h2>{{ edible.name }}</h2>
-        {{ edible.is_vegetarian }}
+        Vegetarian? {{ edible.is_vegetarian }}
         <br />
-        {{ edible.is_vegan }}
+        Vegan? {{ edible.is_vegan }}
         <br />
 
         <router-link v-bind:to="`/edibles/${edible.id}`">More Info</router-link>
@@ -15,8 +15,7 @@
   </div>
 </template>
 
-<style>
-</style>
+<style></style>
 
 <script>
 import axios from "axios";
