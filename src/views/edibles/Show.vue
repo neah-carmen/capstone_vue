@@ -3,17 +3,16 @@
     <h1>{{ message }}</h1>
     <div>
       <h2>{{ edible.name }}</h2>
-      {{ edible.is_vegetarian }}
+      {{ edible.isVegetarian }}
       <br />
-      {{ edible.is_vegan }}
+      {{ edible.isVegan }}
       <br />
       <router-link to="/edibles/">Back</router-link>
     </div>
   </div>
 </template>
 
-<style>
-</style>
+<style></style>
 
 <script>
 import axios from "axios";
@@ -26,7 +25,7 @@ export default {
     };
   },
   created: function() {
-    axios.get("/api/edibles/" + this.$route.params.id).then(response => {
+    axios.get("/api/v1/edibles/" + this.$route.params.id).then(response => {
       this.edible = response.data;
     });
   },
