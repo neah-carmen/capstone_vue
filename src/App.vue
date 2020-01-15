@@ -2,9 +2,9 @@
   <div id="app">
     <div id="nav">
       <router-link to="/edibles/">Home</router-link>|
-      <router-link to="/users/">Signup</router-link>|
-      <router-link to="/sessions/create">Login</router-link>|
-      <router-link to="/sessions/destroy">Logout</router-link>
+      <router-link to="/auth/signup">Signup</router-link>|
+      <router-link to="/auth/login">Login</router-link>|
+      <router-link to="/auth/logout">Logout</router-link>
     </div>
     <router-view />
   </div>
