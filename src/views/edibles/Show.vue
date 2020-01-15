@@ -1,21 +1,12 @@
 <template>
   <div class="edibles-show">
-    <h1>{{ message }}</h1>
     <div>
       <h2>{{ edible.name }}</h2>
-      {{ edible.isVegetarian }}
+      Vegetarian: {{ edible.isVegetarian }}
       <br />
-      {{ edible.isVegan }}
+      Vegan: {{ edible.isVegan }}
       <br />
-      <div v-for="ingredient in ingredients" v-bind:key="ingredient.id">
-        <div>
-          <h2>{{ ingredient.name }}</h2>
-          Vegetarian? {{ ingredient.isVegetarian }}
-          <br />
-          Vegan? {{ ingredient.isVegan }}
-          <br />
-        </div>
-      </div>
+      <div v-for="ingredient in ingredients" v-bind:key="ingredient.id">{{ ingredient.name }}</div>
       <router-link to="/edibles/">Back</router-link>
     </div>
   </div>
@@ -29,7 +20,6 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      message: "Edibles show view",
       edible: {},
       ingredients: {}
     };
