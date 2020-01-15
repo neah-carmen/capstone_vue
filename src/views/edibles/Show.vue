@@ -2,11 +2,16 @@
   <div class="edibles-show">
     <div>
       <h2>{{ edible.name }}</h2>
+      <div v-for="image in images" v-bind:key="image.id">
+        <img v-bind:src="image.url" />
+      </div>
       Vegetarian: {{ edible.isVegetarian }}
       <br />
       Vegan: {{ edible.isVegan }}
       <br />
-      <div v-for="ingredient in ingredients" v-bind:key="ingredient.id">{{ ingredient.name }}</div>
+      <div v-for="ingredient in ingredients" v-bind:key="ingredient.id">
+        {{ ingredient.name }}
+      </div>
       <router-link to="/edibles/">Back</router-link>
     </div>
   </div>
@@ -21,13 +26,15 @@ export default {
   data: function() {
     return {
       edible: {},
-      ingredients: {}
+      ingredients: {},
+      images: {}
     };
   },
   created: function() {
     axios.get("/api/v1/edibles/" + this.$route.params.id).then(response => {
       this.edible = response.data;
       this.ingredients = response.data.Ingredients;
+      this.images = response.data.LabelImages;
     });
   },
   methods: {}
