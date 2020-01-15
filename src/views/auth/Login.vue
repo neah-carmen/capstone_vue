@@ -1,5 +1,5 @@
 <template>
-  <div class="sessions-create">
+  <div class="auth-login">
     <div class="container">
       <form v-on:submit.prevent="submit()">
         <h1>Login</h1>
@@ -38,7 +38,7 @@ export default {
         password: this.password
       };
       axios
-        .post("/api/sessions", params)
+        .post("/api/v1/auth/login", params)
         .then(response => {
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.jwt;

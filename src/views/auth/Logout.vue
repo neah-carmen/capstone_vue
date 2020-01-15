@@ -1,5 +1,5 @@
 <template>
-  <div class="sessions-destroy"></div>
+  <div class="auth-logout"></div>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
   created: function() {
     delete axios.defaults.headers.common["Authorization"];
     localStorage.removeItem("jwt");
-    this.$router.push("/sessions/create/");
+    this.$router.push("/auth/login/");
   }
 };
 </script>

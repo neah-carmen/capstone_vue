@@ -2,9 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import EdiblesIndex from "../views/edibles/Index.vue";
 import EdiblesShow from "../views/edibles/Show.vue";
-import UsersCreate from "../views/users/Show.vue";
-import SessionsCreate from "../views/sessions/Create.vue";
-import SessionsDestroy from "../views/sessions/Destroy.vue";
+import AuthSignup from "../views/auth/Signup.vue";
+import AuthLogin from "../views/auth/Login.vue";
+import AuthLogout from "../views/auth/Logout.vue";
 
 Vue.use(VueRouter);
 
@@ -20,19 +20,19 @@ const routes = [
     component: EdiblesShow
   },
   {
-    path: "/users/",
-    name: "users-create",
-    component: UsersCreate
+    path: "/auth/signup",
+    name: "auth-signup",
+    component: AuthSignup
   },
   {
-    path: "/sessions/create",
-    name: "sessions-create",
-    component: SessionsCreate
+    path: "/auth/Login",
+    name: "auth-login",
+    component: AuthLogin
   },
   {
-    path: "/sessions/destroy",
-    name: "sessions-destroy",
-    component: SessionsDestroy
+    path: "/auth/Logout",
+    name: "auth-logout",
+    component: AuthLogout
   }
 ];
 

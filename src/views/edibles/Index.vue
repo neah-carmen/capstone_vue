@@ -4,9 +4,9 @@
     <div v-for="edible in edibles" v-bind:key="edible.id">
       <div>
         <h2>{{ edible.name }}</h2>
-        Vegetarian? {{ edible.is_vegetarian }}
+        Vegetarian? {{ edible.isVegetarian }}
         <br />
-        Vegan? {{ edible.is_vegan }}
+        Vegan? {{ edible.isVegan }}
         <br />
 
         <router-link v-bind:to="`/edibles/${edible.id}`">More Info</router-link>
@@ -28,7 +28,7 @@ export default {
     };
   },
   created: function() {
-    axios.get("/api/edibles").then(response => {
+    axios.get("/api/v1/edibles").then(response => {
       this.edibles = response.data;
     });
   },
