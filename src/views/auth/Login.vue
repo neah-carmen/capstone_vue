@@ -1,21 +1,27 @@
 <template>
   <div class="auth-login">
     <div class="container">
-      <form v-on:submit.prevent="submit()">
-        <h1>Login</h1>
-        <ul>
-          <li class="text-danger" v-for="error in errors">{{ error }}</li>
-        </ul>
-        <div class="form-group">
-          <label>Email:</label>
-          <input type="email" class="form-control" v-model="email" />
+      <div class="columns">
+        <div class="column is-one-fifth"></div>
+        <div class="column">
+          <form v-on:submit.prevent="submit()">
+            <h1>Login</h1>
+            <ul>
+              <li class="text-danger" v-for="error in errors">{{ error }}</li>
+            </ul>
+            <div class="form-group">
+              <label>Email:</label>
+              <input type="email" class="form-control" v-model="email" />
+            </div>
+            <div class="form-group">
+              <label>Password:</label>
+              <input type="password" class="form-control" v-model="password" />
+            </div>
+            <input type="submit" class="btn btn-primary" value="Submit" />
+          </form>
         </div>
-        <div class="form-group">
-          <label>Password:</label>
-          <input type="password" class="form-control" v-model="password" />
-        </div>
-        <input type="submit" class="btn btn-primary" value="Submit" />
-      </form>
+        <div class="column is-one-fifth"></div>
+      </div>
     </div>
   </div>
 </template>
