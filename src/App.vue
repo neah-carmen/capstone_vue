@@ -17,9 +17,11 @@
               <a class="navbar-item">
                 <router-link to="/edibles/">Home</router-link>
               </a>
-              <a class="navbar-item">
-                Documentation
-              </a>
+              <div class="buttons">
+                <a class="button is-info">
+                  New Edible
+                </a>
+              </div>
             </div>
           </div>
           <div class="navbar-end">
@@ -71,4 +73,8 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+body {
+  background-image: url("./assets/congruent_pentagon.png");
+}
+</style>
