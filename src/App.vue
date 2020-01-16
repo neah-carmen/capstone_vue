@@ -30,14 +30,23 @@
                 </a>
                 <div class="navbar-dropdown">
                   <a class="navbar-item">
-                    <router-link to="/auth/signup">Signup</router-link>
+                    <router-link to="/auth/signup">
+                      <!-- <router-link to="/auth/signup" v-if="!jwt"> -->
+                      Signup</router-link
+                    >
                   </a>
                   <hr class="navbar-divider" />
                   <a class="navbar-item">
-                    <router-link to="/auth/login">Login</router-link>
+                    <router-link to="/auth/login">
+                      <!-- <router-link to="/auth/login" v-if="!jwt"> -->
+                      Login</router-link
+                    >
                   </a>
-                  <a class="navbar-item"
-                    ><router-link to="/auth/logout">Logout</router-link></a
+                  <a class="navbar-item">
+                    <router-link to="/auth/logout">
+                      <!-- <router-link to="/auth/logout" v-if="jwt"> -->
+                      Logout</router-link
+                    ></a
                   >
                 </div>
               </div>
@@ -50,5 +59,16 @@
     <router-view />
   </div>
 </template>
-
+<script>
+export default {
+  data: function() {
+    return {
+      jwt: null
+    };
+  },
+  created: function() {
+    this.jwt = localStorage.jwt;
+  }
+};
+</script>
 <style></style>
