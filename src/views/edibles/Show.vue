@@ -1,30 +1,45 @@
 <template>
   <div class="edibles-show">
-    <div class="card">
-      <div class="card-content">
-        <div class="media">
-          <div class="media-left">
-            <figure class="image">
-              <div v-for="image in images" v-bind:key="image.id">
-                <img v-bind:src="image.url" />
+    <div class="columns">
+      <div class="column"></div>
+      <div class="column is-three-quarters">
+        <div class="card">
+          <div class="card-content">
+            <header class="card-header">
+              <p class="card-header-title">
+                {{ edible.name }}
+              </p>
+            </header>
+            <div class="media">
+              <div class="media-left">
+                <figure class="image">
+                  <div v-for="image in images" v-bind:key="image.id">
+                    <img v-bind:src="image.url" />
+                  </div>
+                </figure>
               </div>
-            </figure>
+            </div>
+            <div class="content">
+              Vegetarian: {{ edible.isVegetarian }}
+              <br />
+              Vegan: {{ edible.isVegan }}
+              <br />
+              Ingredients:
+              <span
+                v-for="(ingredient, index) in ingredients"
+                v-bind:key="ingredient.id"
+              >
+                <span>{{ ingredient.name }}</span
+                ><span v-if="index + 1 < ingredients.length">, </span>
+              </span>
+              <footer class="card-footer">
+                <router-link to="/edibles/">Back</router-link>
+              </footer>
+            </div>
           </div>
-        </div>
-
-        <div class="content">
-          <h2>{{ edible.name }}</h2>
-          Vegetarian: {{ edible.isVegetarian }}
-          <br />
-          Vegan: {{ edible.isVegan }}
-          <br />
-          <div v-for="ingredient in ingredients" v-bind:key="ingredient.id">
-            {{ ingredient.name }}
-          </div>
-          <br />
-          <router-link to="/edibles/">Back</router-link>
         </div>
       </div>
+      <div class="column"></div>
     </div>
   </div>
 </template>
