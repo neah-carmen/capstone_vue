@@ -1,11 +1,14 @@
 <template>
   <div class="edibles-index">
-    <div class="columns">
-      <div class="column"></div>
-      <div class="column is-four-fifths">
+    <div class="columns is-multiline is-mobile">
+      <div
+        class="column is-one-quarter "
+        v-for="edible in edibles"
+        v-bind:key="edible.id"
+      >
         <div class="tile is-ancestor">
-          <div class="tile" v-for="edible in edibles" v-bind:key="edible.id">
-            <div class="card">
+          <div class="tile">
+            <div class="card card-edible">
               <header class="card-header">
                 <p class="card-header-title">
                   {{ edible.name }}
@@ -18,9 +21,9 @@
               </header>
               <div class="card-content">
                 <div class="content">
-                  Vegetarian: {{ edible.isVegetarian }}
+                  Vegetarian: {{ edible.is_vegetarian }}
                   <br />
-                  Vegan: {{ edible.isVegan }}
+                  Vegan: {{ edible.is_vegan }}
                   <br />
                 </div>
               </div>
@@ -33,12 +36,16 @@
           </div>
         </div>
       </div>
-      <div class="column"></div>
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+.card-edible {
+  width: 100%;
+  margin: 0.5em;
+}
+</style>
 
 <script>
 import axios from "axios";
@@ -50,7 +57,7 @@ export default {
     };
   },
   created: function() {
-    axios.get("/api/v1/edibles").then(response => {
+    axios.get("/api/edibles").then(response => {
       this.edibles = response.data;
     });
   },
