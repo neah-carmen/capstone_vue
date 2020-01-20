@@ -60,7 +60,7 @@ export default {
         password_confirmation: this.passwordConfirmation
       };
       axios
-        .post("/api/v1/auth/signup", params)
+        .post("/api/users", params)
         .then(response => {
           this.$router.push("/auth/login/");
         })
