@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import EdiblesIndex from "../views/edibles/Index.vue";
+import EdiblesNew from "../views/edibles/New.vue";
 import EdiblesShow from "../views/edibles/Show.vue";
 import AuthSignup from "../views/auth/Signup.vue";
 import AuthLogin from "../views/auth/Login.vue";
@@ -13,6 +14,11 @@ const routes = [
     path: "/edibles/",
     name: "edibles-index",
     component: EdiblesIndex
+  },
+  {
+    path: "/edibles/new",
+    name: "edibles-new",
+    component: EdiblesNew
   },
   {
     path: "/edibles/:id",
