@@ -45,43 +45,6 @@
             <input type="submit" value="Create edible" />
           </div>
         </form>
-        <br />
-        <br />
-        <form v-on:submit.prevent="createIngredient()">
-          <div>
-            <input type="text" v-model="ingredientName" />
-            <select v-model="is_vegetarian">
-              <option value="true">Yes</option>
-              <option value="false">No</option>
-            </select>
-            <select v-model="is_vegan">
-              <option value="true">Yes</option>
-              <option value="false">No</option>
-            </select>
-          </div>
-          <button type="submit">
-            Create ingredient
-          </button>
-        </form>
-        <br />
-        {{ selectedIngredientIds }}
-        <div v-for="ingredient in allIngredients" v-bind:key="ingredient.id">
-          <input
-            type="checkbox"
-            v-bind:value="ingredient.id"
-            v-model="selectedIngredientIds"
-          />
-          <label v-bind:value="ingredient.name">{{ ingredient.name }}</label>
-          <select v-model="ingredient.is_vegetarian">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-          <select v-model="ingredient.is_vegan">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-
         <router-link to="/edibles/">Back</router-link>
       </div>
       <div class="column"></div>
@@ -107,9 +70,7 @@ export default {
         { name: "", is_vegetarian: null, is_vegan: null },
         { name: "", is_vegetarian: null, is_vegan: null }
       ],
-      selectedIngredientIds: [],
-      is_vegetarian: "",
-      is_vegan: ""
+      selectedIngredientIds: []
     };
   },
   created: function() {
@@ -166,23 +127,6 @@ export default {
           this.user_id = localStorage.jwt.user_id;
           this.$refs.fileInput.value = "";
           this.$router.push(`/edibles/${response.data.id}`);
-        })
-        .catch(error => console.log(error.response));
-    },
-    createIngredient: function() {
-      var ingredientFormData = {
-        name: this.ingredientName,
-        is_vegetarian: this.is_vegetarian,
-        is_vegan: this.is_vegan
-      };
-      axios
-        .post("/api/ingredients", ingredientFormData)
-        .then(response => {
-          var newIngredient = response.data;
-          this.allIngredients.push(newIngredient);
-          this.ingredientName = "";
-          this.is_vegetarian = "";
-          this.is_vegan = "";
         })
         .catch(error => console.log(error.response));
     }
