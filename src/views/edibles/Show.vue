@@ -117,6 +117,7 @@ export default {
     checkEdible: function(edible) {
       axios.patch("/api/edibles/" + this.$route.params.id).then(response => {
         this.edible = response.data;
+        this.selectedEdible = this.edible;
       });
     }
   }
