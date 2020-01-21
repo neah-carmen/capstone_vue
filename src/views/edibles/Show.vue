@@ -113,6 +113,11 @@ export default {
       } else {
         this.selectedEdible = edible;
       }
+    },
+    checkEdible: function(edible) {
+      axios.patch("/api/edibles/" + this.$route.params.id).then(response => {
+        this.edible = response.data;
+      });
     }
   }
 };
