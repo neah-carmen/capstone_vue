@@ -12,6 +12,9 @@
             <br />
             <img id="output" width="50%" />
           </div>
+          <div v-for="ingredient in scannedIngredients">
+            {{ ingredient }}
+          </div>
           <div>
             Ingredients:
             <div v-for="ingredient in newIngredients">
@@ -62,7 +65,8 @@ export default {
     return {
       edibleName: "",
       ingredientName: "",
-      images: "",
+      image: "",
+      image_url: null,
       jwt: null,
       allIngredients: [],
       newIngredients: [
@@ -70,6 +74,7 @@ export default {
         { name: "", is_vegetarian: null, is_vegan: null },
         { name: "", is_vegetarian: null, is_vegan: null }
       ],
+      scannedIngredients: [],
       selectedIngredientIds: []
     };
   },
@@ -87,6 +92,14 @@ export default {
         this.image = event.target.files[0];
         var image = document.getElementById("output");
         image.src = URL.createObjectURL(event.target.files[0]);
+        // Upload the image to backend for analysis
+        var formData = new FormData();
+        formData.append("image", this.image);
+        axios.post("/api/label_reader", formData).then(response => {
+          this.image_url = response.data.image_url;
+          console.log(response.data);
+          this.scannedIngredients = response.data.label_lines;
+        });
       }
     },
     addNewIngredient: function() {
@@ -112,7 +125,7 @@ export default {
     createEdible: function() {
       var formData = new FormData();
       formData.append("name", this.edibleName);
-      formData.append("image", this.image);
+      formData.append("image", this.image_url || this.image);
       this.newIngredients.forEach(ingredient => {
         formData.append("ingredients[]", ingredient.name);
         formData.append("is_vegetarian[]", ingredient.is_vegetarian);
