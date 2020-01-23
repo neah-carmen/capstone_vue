@@ -25,7 +25,7 @@
           <div>
             <button v-on:click.prevent="removeFromNewIngredients()">
               - ingredient</button
-            ><input type="number" v-model="ingredientIndex" />
+            ><input type="number" v-model="selectedIngredientIndex" />
           </div>
           <div>
             Ingredients:
@@ -86,7 +86,7 @@ export default {
       image_url: null,
       jwt: null,
       allIngredients: [],
-      ingredientIndex: "",
+      selectedIngredientIndex: "",
       newIngredients: [
         { name: "", is_vegetarian: null, is_vegan: null },
         { name: "", is_vegetarian: null, is_vegan: null },
@@ -164,9 +164,13 @@ export default {
         })
         .catch(error => console.log(error.response));
     },
-    removeFromNewIngredients: function(newIngredients, ingredientIndex) {
-      let indexToRemove = console.log(this.ingredientIndex);
+    removeFromNewIngredients: function(
+      newIngredients,
+      selectedIngredientIndex
+    ) {
+      let indexToRemove = this.selectedIngredientIndex;
       this.newIngredients.splice(indexToRemove, 1);
+      this.selectedIngredientIndex = "";
     }
   }
 };
