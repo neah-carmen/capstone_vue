@@ -12,9 +12,30 @@
             <br />
             <img id="output" width="50%" />
           </div>
+          <div
+            v-for="ingredient in scannedIngredients"
+            v-bind:key="scannedIngredients.indexOf(ingredient)"
+          >
+            {{ ingredient }}
+          </div>
+          <div v-if="analyzing">
+            <img
+              src="../../assets/eatstreet-loading.gif"
+              height="120"
+              width="160"
+            />
+          </div>
+          <!-- <div>
+            <button v-on:click.prevent="removeFromNewIngredients()">
+              - ingredient</button
+            ><input type="number" v-model="selectedIngredientIndex" />
+          </div> -->
           <div>
             Ingredients:
-            <div v-for="ingredient in newIngredients">
+            <div
+              v-for="ingredient in newIngredients"
+              v-bind:key="newIngredients.indexOf(ingredient)"
+            >
               <input
                 type="text"
                 v-model="ingredient.name"
@@ -22,9 +43,11 @@
                 list="ingredient-names"
               />
               <datalist id="ingredient-names">
-                <option v-for="oneIngredient in allIngredients">{{
-                  oneIngredient.name
-                }}</option>
+                <option
+                  v-for="oneIngredient in allIngredients"
+                  v-bind:key="allIngredients.indexOf(oneIngredient)"
+                  >{{ oneIngredient.name }}</option
+                >
               </datalist>
               <select v-model="ingredient.is_vegetarian">
                 <option value="true">Yes</option>
@@ -34,6 +57,9 @@
                 <option value="true">Yes</option>
                 <option value="false">No</option>
               </select>
+              <button v-on:click.prevent="removeFromNewIngredients(ingredient)">
+                x
+              </button>
             </div>
             <div>
               <button v-on:click.prevent="addNewIngredient()">
@@ -62,15 +88,18 @@ export default {
     return {
       edibleName: "",
       ingredientName: "",
-      images: "",
+      image: "",
+      image_url: null,
       jwt: null,
       allIngredients: [],
+      selectedIngredientIndex: "",
       newIngredients: [
         { name: "", is_vegetarian: null, is_vegan: null },
         { name: "", is_vegetarian: null, is_vegan: null },
         { name: "", is_vegetarian: null, is_vegan: null }
       ],
-      selectedIngredientIds: []
+      scannedIngredients: [],
+      analyzing: false
     };
   },
   created: function() {
@@ -78,15 +107,26 @@ export default {
 
     axios.get("/api/ingredients").then(response => {
       this.allIngredients = response.data;
-      console.log("allIngredients", this.allIngredients);
+      // console.log("allIngredients", this.allIngredients);
     });
   },
   methods: {
     setFile: function(event) {
       if (event.target.files.length > 0) {
+        this.analyzing = true;
         this.image = event.target.files[0];
         var image = document.getElementById("output");
         image.src = URL.createObjectURL(event.target.files[0]);
+        // Upload the image to backend for analysis
+        var formData = new FormData();
+        formData.append("image", this.image);
+        axios.post("/api/label_reader", formData).then(response => {
+          this.image_url = response.data.image_url;
+          console.log(response.data);
+          this.scannedIngredients = response.data.label_lines;
+          this.newIngredients = response.data.ingredients;
+          this.analyzing = false;
+        });
       }
     },
     addNewIngredient: function() {
@@ -97,7 +137,7 @@ export default {
       });
     },
     checkIngredient: function(ingredient) {
-      console.log("checkIngredient", ingredient);
+      // console.log("checkIngredient", ingredient);
       const foundIngredient = this.allIngredients.find(
         item => item.name === ingredient.name
       );
@@ -110,9 +150,9 @@ export default {
       }
     },
     createEdible: function() {
-      var formData = new FormData();
+      const formData = new FormData();
       formData.append("name", this.edibleName);
-      formData.append("image", this.image);
+      formData.append("image", this.image_url || this.image);
       this.newIngredients.forEach(ingredient => {
         formData.append("ingredients[]", ingredient.name);
         formData.append("is_vegetarian[]", ingredient.is_vegetarian);
@@ -129,6 +169,14 @@ export default {
           this.$router.push(`/edibles/${response.data.id}`);
         })
         .catch(error => console.log(error.response));
+    },
+    removeFromNewIngredients: function(ingredient) {
+      let indexToRemove = this.newIngredients.indexOf(ingredient);
+      this.newIngredients.splice(indexToRemove, 1);
+
+      // let indexToRemove = this.selectedIngredientIndex;
+      // this.newIngredients.splice(indexToRemove, 1);
+      // this.selectedIngredientIndex = "";
     }
   }
 };

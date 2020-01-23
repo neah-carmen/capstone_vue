@@ -71,6 +71,9 @@
                     <button v-on:click="updateEdible(edible)">
                       Update Edible
                     </button>
+                    <button v-on:click="destroyEdible(edible)">
+                      Delete Edible
+                    </button>
                   </div>
                   <br />
                   <router-link to="/edibles/">Back</router-link>
@@ -113,6 +116,17 @@ export default {
       } else {
         this.selectedEdible = edible;
       }
+    },
+    checkEdible: function(edible) {
+      axios.patch("/api/edibles/" + this.$route.params.id).then(response => {
+        this.edible = response.data;
+        this.selectedEdible = this.edible;
+      });
+    },
+    destroyEdible: function(edible) {
+      axios.delete("/api/edibles/" + this.$route.params.id).then(response => {
+        this.$router.push("/edibles/");
+      });
     }
   }
 };
