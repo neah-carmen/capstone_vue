@@ -12,7 +12,10 @@
             <br />
             <img id="output" width="50%" />
           </div>
-          <div v-for="ingredient in scannedIngredients">
+          <div
+            v-for="ingredient in scannedIngredients"
+            v-bind:key="scannedIngredients.indexOf(ingredient)"
+          >
             {{ ingredient }}
           </div>
           <div v-if="analyzing">
@@ -22,11 +25,11 @@
               width="160"
             />
           </div>
-          <div>
+          <!-- <div>
             <button v-on:click.prevent="removeFromNewIngredients()">
               - ingredient</button
             ><input type="number" v-model="selectedIngredientIndex" />
-          </div>
+          </div> -->
           <div>
             Ingredients:
             <div
@@ -54,6 +57,9 @@
                 <option value="true">Yes</option>
                 <option value="false">No</option>
               </select>
+              <button v-on:click.prevent="removeFromNewIngredients(ingredient)">
+                x
+              </button>
             </div>
             <div>
               <button v-on:click.prevent="addNewIngredient()">
@@ -164,13 +170,13 @@ export default {
         })
         .catch(error => console.log(error.response));
     },
-    removeFromNewIngredients: function(
-      newIngredients,
-      selectedIngredientIndex
-    ) {
-      let indexToRemove = this.selectedIngredientIndex;
+    removeFromNewIngredients: function(ingredient) {
+      let indexToRemove = this.newIngredients.indexOf(ingredient);
       this.newIngredients.splice(indexToRemove, 1);
-      this.selectedIngredientIndex = "";
+
+      // let indexToRemove = this.selectedIngredientIndex;
+      // this.newIngredients.splice(indexToRemove, 1);
+      // this.selectedIngredientIndex = "";
     }
   }
 };
