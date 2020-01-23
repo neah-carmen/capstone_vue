@@ -15,9 +15,19 @@
           <div v-for="ingredient in scannedIngredients">
             {{ ingredient }}
           </div>
+          <div v-if="analyzing">
+            <img
+              src="../../assets/eatstreet-loading.gif"
+              height="120"
+              width="160"
+            />
+          </div>
           <div>
             Ingredients:
-            <div v-for="ingredient in newIngredients">
+            <div
+              v-for="ingredient in newIngredients"
+              v-bind:key="newIngredients.indexOf(ingredient)"
+            >
               <input
                 type="text"
                 v-model="ingredient.name"
@@ -25,9 +35,11 @@
                 list="ingredient-names"
               />
               <datalist id="ingredient-names">
-                <option v-for="oneIngredient in allIngredients">{{
-                  oneIngredient.name
-                }}</option>
+                <option
+                  v-for="oneIngredient in allIngredients"
+                  v-bind:key="allIngredients.indexOf(oneIngredient)"
+                  >{{ oneIngredient.name }}</option
+                >
               </datalist>
               <select v-model="ingredient.is_vegetarian">
                 <option value="true">Yes</option>
@@ -37,6 +49,9 @@
                 <option value="true">Yes</option>
                 <option value="false">No</option>
               </select>
+              <button v-on:click.prevent="removeFromNewIngredients()">
+                -
+              </button>
             </div>
             <div>
               <button v-on:click.prevent="addNewIngredient()">
@@ -75,7 +90,7 @@ export default {
         { name: "", is_vegetarian: null, is_vegan: null }
       ],
       scannedIngredients: [],
-      selectedIngredientIds: []
+      analyzing: false
     };
   },
   created: function() {
@@ -83,12 +98,13 @@ export default {
 
     axios.get("/api/ingredients").then(response => {
       this.allIngredients = response.data;
-      console.log("allIngredients", this.allIngredients);
+      // console.log("allIngredients", this.allIngredients);
     });
   },
   methods: {
     setFile: function(event) {
       if (event.target.files.length > 0) {
+        this.analyzing = true;
         this.image = event.target.files[0];
         var image = document.getElementById("output");
         image.src = URL.createObjectURL(event.target.files[0]);
@@ -99,6 +115,8 @@ export default {
           this.image_url = response.data.image_url;
           console.log(response.data);
           this.scannedIngredients = response.data.label_lines;
+          this.newIngredients = response.data.ingredients;
+          this.analyzing = false;
         });
       }
     },
@@ -110,7 +128,7 @@ export default {
       });
     },
     checkIngredient: function(ingredient) {
-      console.log("checkIngredient", ingredient);
+      // console.log("checkIngredient", ingredient);
       const foundIngredient = this.allIngredients.find(
         item => item.name === ingredient.name
       );
@@ -123,7 +141,7 @@ export default {
       }
     },
     createEdible: function() {
-      var formData = new FormData();
+      const formData = new FormData();
       formData.append("name", this.edibleName);
       formData.append("image", this.image_url || this.image);
       this.newIngredients.forEach(ingredient => {
@@ -142,6 +160,13 @@ export default {
           this.$router.push(`/edibles/${response.data.id}`);
         })
         .catch(error => console.log(error.response));
+    },
+    removeFromNewIngredients: function(ingredient) {
+      let showIndex = this.newIngredients.indexOf(ingredient);
+      console.log(showIndex);
+      // console.log(this.newIngredients.indexOf(ingredient));
+      // let index = this.newIngredients.indexOf(ingredient);
+      // this.newIngredients.splice(index, 1);
     }
   }
 };
